@@ -2,6 +2,7 @@ package com.komfortcieplny.NBPExchangeRatesViewer.controller;
 
 import com.komfortcieplny.NBPExchangeRatesViewer.exceptions.IllegalCurrencyCodeException;
 import com.komfortcieplny.NBPExchangeRatesViewer.exceptions.IllegalEffectiveDateException;
+import com.komfortcieplny.NBPExchangeRatesViewer.exceptions.IllegalTopCountException;
 import com.komfortcieplny.NBPExchangeRatesViewer.service.ExchangeRatesService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,12 +24,12 @@ public class ExchangeRatesController {
     }
 
     @GetMapping("/minmax/{code}/{topCount}")
-    public String getMaxAndMinAverageExchangeRetes(@PathVariable String code, @PathVariable Long topCount) throws IllegalCurrencyCodeException {
+    public String getMaxAndMinAverageExchangeRetes(@PathVariable String code, @PathVariable Long topCount) throws IllegalCurrencyCodeException, IllegalTopCountException {
         return exchangeRatesService.getMaxAndMinAverageExchangeRates(code, topCount);
     }
 
     @GetMapping("/maxdiff/{code}/{topCount}")
-    public String getMaxDiffExchangeRetes(@PathVariable String code, @PathVariable Long topCount) throws IllegalCurrencyCodeException {
+    public String getMaxDiffExchangeRetes(@PathVariable String code, @PathVariable Long topCount) throws IllegalCurrencyCodeException, IllegalTopCountException {
         return exchangeRatesService.getMaxDiffExchangeRates(code, topCount);
     }
 

@@ -2,6 +2,7 @@ package com.komfortcieplny.NBPExchangeRatesViewer.service;
 
 import com.komfortcieplny.NBPExchangeRatesViewer.exceptions.IllegalCurrencyCodeException;
 import com.komfortcieplny.NBPExchangeRatesViewer.exceptions.IllegalEffectiveDateException;
+import com.komfortcieplny.NBPExchangeRatesViewer.exceptions.IllegalTopCountException;
 import com.komfortcieplny.NBPExchangeRatesViewer.model.ExchangeRates;
 import com.komfortcieplny.NBPExchangeRatesViewer.model.Rate;
 import com.komfortcieplny.NBPExchangeRatesViewer.webclient.NbpClient;
@@ -25,11 +26,11 @@ public class ExchangeRatesService {
         return getAverageString(nbpClient.getAverageExchangeRate(code, effectiveDate));
     }
 
-    public String getMaxAndMinAverageExchangeRates(String code, Long topCount) throws IllegalCurrencyCodeException {
+    public String getMaxAndMinAverageExchangeRates(String code, Long topCount) throws IllegalCurrencyCodeException, IllegalTopCountException {
         return getMinMaxString(nbpClient.getMaxAndMinAverageExchangeRate(code, topCount));
     }
 
-    public String getMaxDiffExchangeRates(String code, Long topCount) throws IllegalCurrencyCodeException {
+    public String getMaxDiffExchangeRates(String code, Long topCount) throws IllegalCurrencyCodeException, IllegalTopCountException {
         return getMaxDiffString(nbpClient.getMaxDiffExchangeRate(code, topCount));
     }
 
