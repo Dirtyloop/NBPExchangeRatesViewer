@@ -2,6 +2,7 @@ package com.komfortcieplny.NBPExchangeRatesViewer.webclient;
 
 import com.komfortcieplny.NBPExchangeRatesViewer.exceptions.IllegalCurrencyCodeException;
 import com.komfortcieplny.NBPExchangeRatesViewer.model.CurrencyCodeTableA;
+import com.komfortcieplny.NBPExchangeRatesViewer.model.CurrencyCodeTableC;
 import com.komfortcieplny.NBPExchangeRatesViewer.model.ExchangeRates;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -27,7 +28,7 @@ public class NbpClient {
     }
 
     public ExchangeRates getMaxDiffExchangeRate(String code, Long topCount) throws IllegalCurrencyCodeException {
-        if(!CurrencyCodeTableA.findByName(code)) {
+        if(!CurrencyCodeTableC.findByName(code)) {
             throw new IllegalCurrencyCodeException(code);
         }
         return getMethod("/c/{code}/last/{topCount}/?format=json", ExchangeRates.class, code, topCount);
