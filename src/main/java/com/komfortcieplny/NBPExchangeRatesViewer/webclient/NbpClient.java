@@ -1,0 +1,20 @@
+package com.komfortcieplny.NBPExchangeRatesViewer.webclient;
+
+import com.komfortcieplny.NBPExchangeRatesViewer.model.ExchangeRates;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+@Component
+public class NbpClient {
+
+    private static final String NBP_URL = "https://api.nbp.pl/api/exchangerates/rates/";
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    public ExchangeRates getAverageExchangeRate(String code, String effectiveDate) {
+        return getMethod("/a/{code}/{effectiveDate}/?format=json", ExchangeRates.class, code, effectiveDate);
+    }
+
+    private <T> T getMethod(String url, Class<T> responseType, Object... objects) {
+        return restTemplate.getForObject(NBP_URL + url, responseType, objects);
+    }
+}
