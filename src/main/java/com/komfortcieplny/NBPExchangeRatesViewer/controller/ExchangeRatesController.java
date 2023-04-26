@@ -24,4 +24,10 @@ public class ExchangeRatesController {
     public String getMaxAndMinAverageExchangeRetes(@PathVariable String code, @PathVariable Long topCount) {
         return exchangeRatesService.getMaxAndMinAverageExchangeRates(code, topCount);
     }
+
+    @GetMapping("/maxdiff/{code}/{topCount}")
+    public String getMaxDiffExchangeRetes(@PathVariable String code, @PathVariable Long topCount){
+        return exchangeRatesService.getMaxDiffExchangeRates(code, topCount);
+    }
+
 }

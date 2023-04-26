@@ -15,7 +15,11 @@ public class NbpClient {
     }
 
     public ExchangeRates getMaxAndMinAverageExchangeRate(String code, Long topCount) {
-        return getMethod("/a/{code}/last/{lastquotations}/?format=json", ExchangeRates.class, code, topCount);
+        return getMethod("/a/{code}/last/{topCount}/?format=json", ExchangeRates.class, code, topCount);
+    }
+
+    public ExchangeRates getMaxDiffExchangeRate(String code, Long topCount){
+        return getMethod("/c/{code}/last/{topCount}/?format=json", ExchangeRates.class, code, topCount);
     }
 
     private <T> T getMethod(String url, Class<T> responseType, Object... objects) {
