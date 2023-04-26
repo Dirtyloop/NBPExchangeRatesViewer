@@ -7,8 +7,11 @@ import com.komfortcieplny.NBPExchangeRatesViewer.model.CurrencyCodeTableA;
 import com.komfortcieplny.NBPExchangeRatesViewer.model.CurrencyCodeTableC;
 import com.komfortcieplny.NBPExchangeRatesViewer.model.ExchangeRates;
 import com.komfortcieplny.NBPExchangeRatesViewer.validators.DateValidator;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 @Component
 public class NbpClient {
@@ -28,7 +31,12 @@ public class NbpClient {
         if(!dateValidator.isValid(effectiveDate)) {
             throw new IllegalEffectiveDateException(effectiveDate);
         }
-        return getMethod("/a/{code}/{effectiveDate}/?format=json", ExchangeRates.class, code, effectiveDate);
+        try {
+            return getMethod("/a/{code}/{effectiveDate}/?format=json", ExchangeRates.class, code, effectiveDate);
+        } catch (
+            HttpClientErrorException ex) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource Not Found", ex);
+        }
     }
 
     public ExchangeRates getMaxAndMinAverageExchangeRate(String code, Long topCount) throws IllegalCurrencyCodeException, IllegalTopCountException {
@@ -38,7 +46,12 @@ public class NbpClient {
         if(topCount<1 || topCount > 255) {
             throw new IllegalTopCountException(topCount);
         }
-        return getMethod("/a/{code}/last/{topCount}/?format=json", ExchangeRates.class, code, topCount);
+        try {
+            return getMethod("/a/{code}/last/{topCount}/?format=json", ExchangeRates.class, code, topCount);
+        } catch (
+                HttpClientErrorException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource Not Found", ex);
+        }
     }
 
     public ExchangeRates getMaxDiffExchangeRate(String code, Long topCount) throws IllegalCurrencyCodeException, IllegalTopCountException {
@@ -48,7 +61,12 @@ public class NbpClient {
         if(topCount<1 || topCount > 255) {
             throw new IllegalTopCountException(topCount);
         }
-        return getMethod("/c/{code}/last/{topCount}/?format=json", ExchangeRates.class, code, topCount);
+        try {
+            return getMethod("/c/{code}/last/{topCount}/?format=json", ExchangeRates.class, code, topCount);
+        } catch (
+                HttpClientErrorException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource Not Found", ex);
+        }
     }
 
     private <T> T getMethod(String url, Class<T> responseType, Object... objects) {
