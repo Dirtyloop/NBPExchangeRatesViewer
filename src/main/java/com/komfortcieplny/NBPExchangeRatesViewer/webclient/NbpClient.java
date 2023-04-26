@@ -14,6 +14,10 @@ public class NbpClient {
         return getMethod("/a/{code}/{effectiveDate}/?format=json", ExchangeRates.class, code, effectiveDate);
     }
 
+    public ExchangeRates getMaxAndMinAverageExchangeRate(String code, Long topCount) {
+        return getMethod("/a/{code}/last/{lastquotations}/?format=json", ExchangeRates.class, code, topCount);
+    }
+
     private <T> T getMethod(String url, Class<T> responseType, Object... objects) {
         return restTemplate.getForObject(NBP_URL + url, responseType, objects);
     }

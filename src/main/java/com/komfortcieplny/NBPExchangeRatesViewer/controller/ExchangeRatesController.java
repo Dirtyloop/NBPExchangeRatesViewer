@@ -19,4 +19,9 @@ public class ExchangeRatesController {
     public String getAverageExchangeRete(@PathVariable String code, @PathVariable String effectiveDate) {
         return exchangeRatesService.getAverageExchangeRate(code, effectiveDate);
     }
+
+    @GetMapping("/minmax/{code}/{topCount}")
+    public String getMaxAndMinAverageExchangeRetes(@PathVariable String code, @PathVariable Long topCount) {
+        return exchangeRatesService.getMaxAndMinAverageExchangeRates(code, topCount);
+    }
 }
