@@ -16,6 +16,7 @@ import java.util.NoSuchElementException;
 @Service
 public class ExchangeRatesService {
 
+    private static String newLine = System.getProperty("line.separator");
     private final NbpClient nbpClient;
 
     public ExchangeRatesService(NbpClient nbpClient) {
@@ -35,15 +36,15 @@ public class ExchangeRatesService {
     }
 
     private String getAverageString(ExchangeRates exchangeRates) {
-        return "code: " + exchangeRates.code() +
-                "<br>effectiveDate: " + exchangeRates.rates().get(0).effectiveDate() +
-                "<br>average: " + exchangeRates.rates().get(0).mid();
+        return "code: " + exchangeRates.code() + newLine +
+                "effectiveDate: " + exchangeRates.rates().get(0).effectiveDate() + newLine +
+                "average: " + exchangeRates.rates().get(0).mid();
     }
 
     private String getMinMaxString(ExchangeRates exchangeRates) {
-        return "code: " + exchangeRates.code() +
-                "<br>min: " + getMin(exchangeRates.rates()) +
-                "<br>max: " + getMax(exchangeRates.rates());
+        return "code: " + exchangeRates.code() + newLine +
+                "min: " + getMin(exchangeRates.rates()) + newLine +
+                "max: " + getMax(exchangeRates.rates());
     }
 
     private double getMin(List<Rate> rates) {
@@ -61,8 +62,8 @@ public class ExchangeRatesService {
     }
 
     private String getMaxDiffString(ExchangeRates exchangeRates) {
-        return "code: " + exchangeRates.code() +
-                "<br>maxdiff: " + getMaxDiff(exchangeRates.rates());
+        return "code: " + exchangeRates.code() + newLine +
+                "maxdiff: " + getMaxDiff(exchangeRates.rates());
     }
 
     private BigDecimal getMaxDiff(List<Rate> rates) {
