@@ -1,6 +1,7 @@
 package com.komfortcieplny.NBPExchangeRatesViewer.controller;
 
 import com.komfortcieplny.NBPExchangeRatesViewer.exceptions.IllegalCurrencyCodeException;
+import com.komfortcieplny.NBPExchangeRatesViewer.exceptions.IllegalEffectiveDateException;
 import com.komfortcieplny.NBPExchangeRatesViewer.service.ExchangeRatesService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,7 @@ public class ExchangeRatesController {
     }
 
     @GetMapping("/average/{code}/{effectiveDate}")
-    public String getAverageExchangeRete(@PathVariable String code, @PathVariable String effectiveDate) throws IllegalCurrencyCodeException {
+    public String getAverageExchangeRete(@PathVariable String code, @PathVariable String effectiveDate) throws IllegalCurrencyCodeException, IllegalEffectiveDateException {
         return exchangeRatesService.getAverageExchangeRate(code, effectiveDate);
     }
 

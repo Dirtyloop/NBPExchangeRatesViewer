@@ -1,9 +1,11 @@
 package com.komfortcieplny.NBPExchangeRatesViewer.webclient;
 
 import com.komfortcieplny.NBPExchangeRatesViewer.exceptions.IllegalCurrencyCodeException;
+import com.komfortcieplny.NBPExchangeRatesViewer.exceptions.IllegalEffectiveDateException;
 import com.komfortcieplny.NBPExchangeRatesViewer.model.CurrencyCodeTableA;
 import com.komfortcieplny.NBPExchangeRatesViewer.model.CurrencyCodeTableC;
 import com.komfortcieplny.NBPExchangeRatesViewer.model.ExchangeRates;
+import com.komfortcieplny.NBPExchangeRatesViewer.validators.DateValidator;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,10 +14,18 @@ public class NbpClient {
 
     private static final String NBP_URL = "https://api.nbp.pl/api/exchangerates/rates/";
     private final RestTemplate restTemplate = new RestTemplate();
+    private final DateValidator dateValidator;
 
-    public ExchangeRates getAverageExchangeRate(String code, String effectiveDate) throws IllegalCurrencyCodeException {
+    public NbpClient(DateValidator dateValidator) {
+        this.dateValidator = dateValidator;
+    }
+
+    public ExchangeRates getAverageExchangeRate(String code, String effectiveDate) throws IllegalCurrencyCodeException, IllegalEffectiveDateException {
         if(!CurrencyCodeTableA.findByName(code)) {
             throw new IllegalCurrencyCodeException(code);
+        }
+        if(!dateValidator.isValid(effectiveDate)) {
+            throw new IllegalEffectiveDateException(effectiveDate);
         }
         return getMethod("/a/{code}/{effectiveDate}/?format=json", ExchangeRates.class, code, effectiveDate);
     }
