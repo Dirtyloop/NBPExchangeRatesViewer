@@ -1,5 +1,6 @@
 package com.komfortcieplny.NBPExchangeRatesViewer.controller;
 
+import com.komfortcieplny.NBPExchangeRatesViewer.exceptions.IllegalCurrencyCodeException;
 import com.komfortcieplny.NBPExchangeRatesViewer.service.ExchangeRatesService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,17 +17,17 @@ public class ExchangeRatesController {
     }
 
     @GetMapping("/average/{code}/{effectiveDate}")
-    public String getAverageExchangeRete(@PathVariable String code, @PathVariable String effectiveDate) {
+    public String getAverageExchangeRete(@PathVariable String code, @PathVariable String effectiveDate) throws IllegalCurrencyCodeException {
         return exchangeRatesService.getAverageExchangeRate(code, effectiveDate);
     }
 
     @GetMapping("/minmax/{code}/{topCount}")
-    public String getMaxAndMinAverageExchangeRetes(@PathVariable String code, @PathVariable Long topCount) {
+    public String getMaxAndMinAverageExchangeRetes(@PathVariable String code, @PathVariable Long topCount) throws IllegalCurrencyCodeException {
         return exchangeRatesService.getMaxAndMinAverageExchangeRates(code, topCount);
     }
 
     @GetMapping("/maxdiff/{code}/{topCount}")
-    public String getMaxDiffExchangeRetes(@PathVariable String code, @PathVariable Long topCount){
+    public String getMaxDiffExchangeRetes(@PathVariable String code, @PathVariable Long topCount) throws IllegalCurrencyCodeException {
         return exchangeRatesService.getMaxDiffExchangeRates(code, topCount);
     }
 

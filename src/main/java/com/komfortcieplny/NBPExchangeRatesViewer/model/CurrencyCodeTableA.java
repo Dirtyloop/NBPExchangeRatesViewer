@@ -34,4 +34,13 @@ public enum CurrencyCodeTableA {
     JPY,
     CNY,
     XDR;
+
+    public static boolean findByName(String name) {
+        for (CurrencyCodeTableA currencyCode : values()) {
+            if (currencyCode.name().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
